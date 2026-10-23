@@ -1,0 +1,297 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="theme-color" content="#FFF500">
+    <meta name="description" content="Desainero — Uma nova identidade está chegando. Em breve.">
+
+    <title>Desainero | Em Breve</title>
+
+    <!-- Tipografia -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&family=Outfit:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* =========================
+           CONFIGURAÇÕES GERAIS
+        ========================== */
+
+        :root {
+            --amarelo: #FFF500;
+            --preto: #080808;
+            --fonte-principal: 'Manrope', Arial, sans-serif;
+            --fonte-marca: 'Outfit', Arial, sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            min-height: 100%;
+            background: var(--amarelo);
+        }
+
+        body {
+            width: 100%;
+            min-height: 100vh;
+            min-height: 100svh;
+            overflow: hidden;
+            background: var(--amarelo);
+            color: var(--preto);
+            font-family: var(--fonte-principal);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* =========================
+           ÁREA PRINCIPAL
+        ========================== */
+
+        .pagina {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            min-height: 100vh;
+            min-height: 100svh;
+            isolation: isolate;
+            overflow: hidden;
+            padding: 32px;
+        }
+
+        /* =========================
+           DETALHES GEOMÉTRICOS
+        ========================== */
+
+        .linha {
+            position: absolute;
+            z-index: -1;
+            width: 1px;
+            height: 200px;
+            background: var(--preto);
+            opacity: 0.9;
+            pointer-events: none;
+        }
+
+        .linha-superior {
+            top: 0;
+            left: 50%;
+        }
+
+        .linha-inferior {
+            bottom: 0;
+            left: 50%;
+        }
+
+        .circulo {
+            position: absolute;
+            z-index: -1;
+            width: 440px;
+            height: 440px;
+            border: 1px solid var(--preto);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .circulo-superior {
+            top: -225px;
+            right: -185px;
+        }
+
+        .circulo-inferior {
+            bottom: -295px;
+            left: -155px;
+        }
+
+        /* =========================
+           CONTEÚDO CENTRAL
+        ========================== */
+
+        .conteudo {
+            width: 100%;
+            max-width: 1200px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            animation: aparecer 1.2s ease-out both;
+        }
+
+        .titulo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: clamp(12px, 2.8vw, 36px);
+            width: 100%;
+            white-space: nowrap;
+            text-transform: uppercase;
+            line-height: 0.9;
+            letter-spacing: -0.075em;
+        }
+
+        .titulo-em {
+            font-family: var(--fonte-principal);
+            font-size: clamp(4rem, 12vw, 12rem);
+            font-weight: 200;
+            letter-spacing: -0.09em;
+        }
+
+        .titulo-breve {
+            font-family: var(--fonte-principal);
+            font-size: clamp(4rem, 12vw, 12rem);
+            font-weight: 800;
+            letter-spacing: -0.085em;
+        }
+
+        /* =========================
+           LOGOTIPO DESAINERO
+        ========================== */
+
+        .marca {
+            margin-top: clamp(38px, 6vw, 68px);
+            font-family: var(--fonte-marca);
+            font-size: clamp(1.9rem, 3.6vw, 3.1rem);
+            font-weight: 300;
+            letter-spacing: -0.09em;
+            line-height: 1;
+            color: var(--preto);
+            text-decoration: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .marca:hover {
+            opacity: 0.65;
+        }
+
+        /* =========================
+           ANIMAÇÃO DE ENTRADA
+        ========================== */
+
+        @keyframes aparecer {
+            from {
+                opacity: 0;
+                transform: translateY(16px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* =========================
+           RESPONSIVIDADE
+        ========================== */
+
+        @media (max-width: 600px) {
+            .pagina {
+                padding: 20px;
+            }
+
+            .titulo {
+                gap: 12px;
+                letter-spacing: -0.06em;
+            }
+
+            .titulo-em,
+            .titulo-breve {
+                font-size: clamp(3.2rem, 14vw, 5.2rem);
+            }
+
+            .titulo-em {
+                letter-spacing: -0.09em;
+            }
+
+            .titulo-breve {
+                letter-spacing: -0.085em;
+            }
+
+            .marca {
+                margin-top: 38px;
+                font-size: clamp(2rem, 8vw, 2.7rem);
+            }
+
+            .linha {
+                height: 100px;
+            }
+
+            .circulo {
+                width: 250px;
+                height: 250px;
+            }
+
+            .circulo-superior {
+                top: -125px;
+                right: -120px;
+            }
+
+            .circulo-inferior {
+                bottom: -180px;
+                left: -100px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .pagina {
+                padding: 12px;
+            }
+
+            .titulo {
+                gap: 8px;
+            }
+
+            .titulo-em,
+            .titulo-breve {
+                font-size: 3rem;
+            }
+        }
+
+        /* Respeita quem prefere movimento reduzido */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <main class="pagina" aria-label="Desainero em breve">
+
+        <!-- Elementos decorativos -->
+        <div class="linha linha-superior" aria-hidden="true"></div>
+        <div class="linha linha-inferior" aria-hidden="true"></div>
+
+        <div class="circulo circulo-superior" aria-hidden="true"></div>
+        <div class="circulo circulo-inferior" aria-hidden="true"></div>
+
+        <!-- Conteúdo principal -->
+        <section class="conteudo">
+
+            <h1 class="titulo">
+                <span class="titulo-em">EM</span>
+                <span class="titulo-breve">BREVE</span>
+            </h1>
+
+            <a class="marca" href="/" aria-label="Desainero">
+                desainero
+            </a>
+
+        </section>
+    </main>
+</body>
+</html>
