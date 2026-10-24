@@ -178,7 +178,8 @@
     const object = Object.fromEntries(formData);
     const json = JSON.stringify(object);
 
-    fetch('https://web3forms.com', {
+    // FIX: URL alterada para o endpoint correto da API
+    fetch('https://api.web3forms.com/submit', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
