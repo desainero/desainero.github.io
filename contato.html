@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contato - Web3Forms</title>
+  <style>
+    :root {
+      --primary-color: #4f46e5;
+      --primary-hover: #4338ca;
+      --bg-color: #f3f4f6;
+      --card-bg: #ffffff;
+      --text-color: #1f2937;
+      --border-color: #d1d5db;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .form-container {
+      background-color: var(--card-bg);
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      width: 100%;
+      max-width: 500px;
+    }
+
+    h2 {
+      margin-bottom: 8px;
+      font-size: 24px;
+      font-weight: 600;
+    }
+
+    p.subtitle {
+      color: #6b7280;
+      font-size: 14px;
+      margin-bottom: 24px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      font-size: 15px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      background-color: #f9fafb;
+    }
+
+    input:focus,
+    textarea:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+      background-color: #fff;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    button {
+      width: 100%;
+      background-color: var(--primary-color);
+      color: white;
+      padding: 14px;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    button:hover {
+      background-color: var(--primary-hover);
+    }
+
+    #result-message {
+      margin-top: 16px;
+      padding: 12px;
+      border-radius: 6px;
+      font-size: 14px;
+      text-align: center;
+      display: none;
+    }
+
+    #result-message.success {
+      display: block;
+      background-color: #def7ec;
+      color: #03543f;
+      border: 1px solid #bcf0da;
+    }
+
+    #result-message.error {
+      display: block;
+      background-color: #fde8e8;
+      color: #9b1c1c;
+      border: 1px solid #fbd5d5;
+    }
+  </style>
+</head>
+<body>
+
+<div class="form-container">
+  <h2>Fale Conosco</h2>
+  <p class="subtitle">Envie sua mensagem e responderemos em breve.</p>
+
+  <form id="contact-form" action="https://api.web3forms.com/submit" method="POST">
+    <!-- ATENÇÃO: Cole sua chave de acesso do Web3Forms no value abaixo -->
+    <input type="hidden" name="access_key" value="09e15274-6f20-48f6-b18a-3471b84e2dee">
+    <input type="hidden" name="subject" value="Nova mensagem de contato do site">
+    <input type="checkbox" name="botcheck" style="display: none;">
+
+    <div class="form-group">
+      <label for="nome">Nome completo</label>
+      <input type="text" id="nome" name="Nome" placeholder="Seu nome" required>
+    </div>
+
+    <div class="form-group">
+      <label for="email">Endereço de e-mail</label>
+      <input type="email" id="email" name="Email" placeholder="seu@email.com" required>
+    </div>
+
+    <div class="form-group">
+      <label for="mensagem">Sua mensagem</label>
+      <textarea id="mensagem" name="Mensagem" placeholder="Como podemos ajudar?" required></textarea>
+    </div>
+
+    <button type="submit" id="submit-btn">Enviar mensagem</button>
+    <div id="result-message"></div>
+  </form>
+</div>
+
+<script>
+  const form = document.getElementById('contact-form');
+  const result = document.getElementById('result-message');
+  const button = document.getElementById('submit-btn');
+
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    // Altera o estado do botão durante o envio
+    button.disabled = true;
+    button.innerText = "Enviando...";
+    result.style.display = "none";
+
+    const formData = new FormData(form);
+    const object = Object.fromEntries(formData);
+    const json = JSON.stringify(object);
+
+    fetch('https://web3forms.com', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: json
+        })
+        .then(async (response) => {
+            let res = await response.json();
+            if (response.status == 200) {
+                result.className = "success";
+                result.innerHTML = "Mensagem enviada com sucesso! Verifique seu e-mail.";
+                form.reset();
+            } else {
+                result.className = "error";
+                result.innerHTML = res.message || "Ocorreu um erro ao enviar.";
+            }
+        })
+        .catch(error => {
+            result.className = "error";
+            result.innerHTML = "Erro de conexão. Tente novamente mais tarde.";
+        })
+        .then(function() {
+            // Restaura o botão após o término da requisição
+            button.disabled = false;
+            button.innerText = "Enviar mensagem";
+        });
+  });
+</script>
+
+</body>
+</html>
